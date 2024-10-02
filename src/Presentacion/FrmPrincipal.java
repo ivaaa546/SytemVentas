@@ -49,6 +49,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Ventas");
 
+        mnuAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/almacen.png"))); // NOI18N
         mnuAlmacen.setText("Almacen");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -71,6 +72,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuAlmacen);
 
+        mnuCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/compras.png"))); // NOI18N
         mnuCompras.setText("Compras");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -83,6 +85,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuCompras);
 
+        mnuCVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/ventas.png"))); // NOI18N
         mnuCVentas.setText("Ventas");
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
@@ -95,6 +98,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuCVentas);
 
+        mnuAcceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/acceso.png"))); // NOI18N
         mnuAcceso.setText("Acceso");
 
         jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -107,6 +111,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuAcceso);
 
+        mnuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/consulta.png"))); // NOI18N
         mnuConsultas.setText("Consultas");
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -119,6 +124,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuConsultas);
 
+        mnuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Presentacion/Imagenes/cerrar-sesion.png"))); // NOI18N
         mnuSalir.setText("Salir");
         menuBar.add(mnuSalir);
 
@@ -132,7 +138,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(contenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+            .addComponent(contenedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         );
 
         pack();

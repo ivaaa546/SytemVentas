@@ -33,7 +33,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
     //variables para el control de almacenamiento de las imagenes
     private String rutaOrigen;
     private String rutaDestino;
-    private final String directorio = "imagenesA/"; //*
+    private final String directorio = "src/files/articulos/"; //*
     private String imagen = "";
     private String imagenAnt = "";
     
@@ -50,7 +50,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
     public frmArticulos() {
         initComponents();
         this.CONTROL = new ArticuloControl();
-        this.listar("");
+        this.listar("", false);
         this.primeraCarga = false;
         
         //deshabilitamos el panelde mantenimiento al cargar el formulario
@@ -63,6 +63,29 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         
         //mostramos la informacion en el cuadro combinado
         cargarCategorias();
+    }
+    //metodo para la paginacion
+    private void Paginar(){
+        int totalPaginas;
+        this.totalReg = this.CONTROL.total();
+        
+        //obtenemos el valor del total de registros por pagina
+        this.totalPagina = Integer.parseInt((String)cboTotalRegPag1.getSelectedItem());
+        
+        //hacemos el calculo de total de paginas
+        totalPaginas = (int)(Math.ceil((double)this.totalReg / this.totalPagina));
+        
+        //mostramos las paginas en el cuadro combinado
+        if(totalPaginas == 0){
+            totalPaginas = 1;
+        }
+        cboNumPag1.removeAllItems();
+        
+        //agregamos los valores
+        for(int i = 1; i <= totalPaginas; i++){
+            cboNumPag1.addItem(Integer.toString(i));
+        }
+        cboNumPag1.setSelectedIndex(0);
     }
 
     /**
@@ -86,6 +109,10 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         btnActivar = new javax.swing.JButton();
         btnDesactivar = new javax.swing.JButton();
         lblTotalRegistros = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        cboNumPag1 = new javax.swing.JComboBox<>();
+        jLabel14 = new javax.swing.JLabel();
+        cboTotalRegPag1 = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -171,6 +198,23 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         lblTotalRegistros.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalRegistros.setText("Registros");
 
+        jLabel13.setText("NumPag: ");
+
+        cboNumPag1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNumPag1ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Total Registros por Pagina: ");
+
+        cboTotalRegPag1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "15", "20", "50", "100" }));
+        cboTotalRegPag1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTotalRegPag1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -178,12 +222,6 @@ public class frmArticulos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnActivar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDesactivar)
-                        .addGap(419, 419, 419)
-                        .addComponent(lblTotalRegistros))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1026, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -194,7 +232,24 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEditar)))
+                        .addComponent(btnEditar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnActivar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnDesactivar)
+                        .addGap(103, 103, 103)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(cboNumPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addGap(46, 46, 46)
+                                .addComponent(lblTotalRegistros))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(cboTotalRegPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -213,8 +268,14 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActivar)
                     .addComponent(btnDesactivar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTotalRegistros))
-                .addContainerGap(69, Short.MAX_VALUE))
+                    .addComponent(lblTotalRegistros)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboNumPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboTotalRegPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         tabGeneral.addTab("Listado", jPanel1);
@@ -391,8 +452,19 @@ public class frmArticulos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
     //metodo para listar los elementos de la tabla categoria
     
-    private void listar(String texto){
-        tablaListado.setModel(this.CONTROL.listar(texto));
+    private void listar(String texto, boolean paginar){
+        //actualizar los valores para paginar
+        this.totalPagina = Integer.parseInt((String)cboTotalRegPag1.getSelectedItem());
+        //validamos que el valor no sea nulo
+        if(cboNumPag1.getSelectedItem() != null){
+            this.numPag = Integer.parseInt((String)cboNumPag1.getSelectedItem());
+        }
+        if(paginar == true){
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPagina, this.numPag));
+        }else{
+            tablaListado.setModel(this.CONTROL.listar(texto, this.totalPagina, 1));
+        }
+       // tablaListado.setModel(this.CONTROL.listar(texto,10,1));
         //agregamos un metodo para el ordenamiento de los registros deacuerdoa a la columna seleccionada
         TableRowSorter orden = new TableRowSorter(tablaListado.getModel());
         tablaListado.setRowSorter(orden);
@@ -423,7 +495,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
     }
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // Obtener la informacion del cuadro de texto para realizar la busqueda
-        this.listar(txtBuscar.getText());
+        this.listar(txtBuscar.getText(), false);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -490,7 +562,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                 String resp = this.CONTROL.activar(Integer.parseInt(id));
                 if(resp == "OK"){
                     this.mensajeOk("Registro activado");
-                    this.listar("");
+                    this.listar("", false);
                 }else{
                     this.mensajeError(resp);
                 }
@@ -513,7 +585,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                 String resp = this.CONTROL.desactivar(Integer.parseInt(id));
                 if(resp == "OK"){
                     this.mensajeOk("Registro desactivado");
-                    this.listar("");
+                    this.listar("", false);
                 }else{
                     this.mensajeError(resp);
                 }
@@ -585,7 +657,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                 }
                 this.mensajeOk("Articulo actualizado correctamente");
                 this.Limpiar();
-                this.listar("");
+                this.listar("", false);
                 tabGeneral.setEnabledAt(1,false);
                 tabGeneral.setEnabledAt(0,true);
                 tabGeneral.setSelectedIndex(0);
@@ -604,7 +676,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
                 }
                 this.mensajeOk("Articulo registrado correctamente");
                 this.Limpiar();
-                this.listar("");
+                this.listar("", false);
                 tabGeneral.setEnabledAt(1,false);
                 tabGeneral.setEnabledAt(0,true);
                 tabGeneral.setSelectedIndex(0);
@@ -625,6 +697,18 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         this.Limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void cboNumPag1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNumPag1ActionPerformed
+                //activar la primera carga si no esta activa
+        if(this.primeraCarga == false){
+            this.listar("", true);
+        }
+    }//GEN-LAST:event_cboNumPag1ActionPerformed
+
+    private void cboTotalRegPag1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTotalRegPag1ActionPerformed
+        // TODO add your handling code here:
+        this.Paginar();
+    }//GEN-LAST:event_cboTotalRegPag1ActionPerformed
+
     private void Limpiar(){
         txtCodigo.setText("");
         txtNombre_.setText("");
@@ -640,7 +724,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         this.accion = "guardar";
     }
     //metodo para subir la imagen
-    private void subirImagen(){
+        private void subirImagen(){
         File origen = new File(this.rutaOrigen);
         File destino = new File(this.rutaDestino);
         
@@ -661,16 +745,30 @@ public class frmArticulos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActivar;
+    private javax.swing.JButton btnActivar1;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDesactivar;
+    private javax.swing.JButton btnDesactivar1;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEditar1;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnNuevo1;
+    private javax.swing.JComboBox<String> cboNumPag;
+    private javax.swing.JComboBox<String> cboNumPag1;
+    private javax.swing.JComboBox<String> cboTotalRegPag;
+    private javax.swing.JComboBox<String> cboTotalRegPag1;
     private javax.swing.JComboBox<String> cmbCategoria_;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -680,16 +778,22 @@ public class frmArticulos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblTotalRegistros;
+    private javax.swing.JLabel lblTotalRegistros1;
     private javax.swing.JTabbedPane tabGeneral;
+    private javax.swing.JTabbedPane tabGeneral1;
     private javax.swing.JTable tablaListado;
+    private javax.swing.JTable tablaListado1;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtNombreB;
     private javax.swing.JTextField txtNombre_;
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtStock;

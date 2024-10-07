@@ -5,6 +5,7 @@
 package Datos;
 
 import Datos.Interfaces.InterfaceSimple;
+import Datos.Interfaces.PaginadoInterface;
 import Entidades.Articulo;
 import Entidades.Categoria;
 import database.Conexion;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
  *
  * @author pc
  */
-public class ArticuloDao implements InterfaceSimple<Articulo> {
+public class ArticuloDao implements PaginadoInterface<Articulo> {
     //declaramos una constante para instancia a la clase conexion
     private final Conexion CON;
     
@@ -39,36 +40,69 @@ public class ArticuloDao implements InterfaceSimple<Articulo> {
     }
 
     @Override
-    public List<Articulo> listar(String texto) {
-        List<Articulo> registros = new ArrayList<>();
-    try {
-        ps = CON.Conectar().prepareStatement("Select a.id, a.categoria_id, c.nombre as categoria_nombre, a.codigo, a.nombre,"
-                + "a.precio_venta, a.stock, a.descripcion, a.imagen, a.ativo "
-                + "from articulo a inner join categoria c on a.categoria_id = c.id "
-                + "where a.nombre Like ? order by a.id asc");
-
-        // Parámetro 1: el texto para la búsqueda con LIKE
-        ps.setString(1, "%" + texto + "%");
-
-        rs = ps.executeQuery();
-        while(rs.next()) {
-            registros.add(new Articulo(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-                    rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9), rs.getBoolean(10)));
+    public List<Articulo> listar(String texto, int totalRegPagina, int numPagina) {
+        //creamos un objeto de tipo lista
+        List<Articulo> registros = new ArrayList();
+        
+        try {
+            ps = CON.Conectar().prepareStatement("Select a.id, a.categoria_id, c.nombre as categoria_nombre, a.codigo, a.nombre,"
+                    + "a.precio_venta, a.stock, a.descripcion, a.imagen, a.ativo from articulo a inner join categoria c on a.categoria_id = c.id"
+                    + " where a.nombre Like ? order by a.id asc Limit ?, ?");//*
+            ps.setString(1, "%" + texto + "%");
+            ps.setInt(2, (numPagina - 1) * totalRegPagina);
+            ps.setInt(3, totalRegPagina);//*
+            rs = ps.executeQuery();
+            while(rs.next()){
+                registros.add(new Articulo(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+                        rs.getDouble(6), rs.getInt(7), rs.getString(8), rs.getString(9),  rs.getBoolean(10)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-
-        ps.close();
-        rs.close();
-    } catch (SQLException ex) {
-        Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(null, ex.getMessage());
-    } finally {
-        ps = null;
-        rs = null;
-        CON.Desconectar();
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return registros;
     }
-    return registros;
+    
+    //metodo para obtener el codigo del articulo
+    public Articulo obtenerArticuloCodigoIngreso(String codigo){
+        Articulo art = null;
+        //creamos un objeto de tipo lista
+        List<Articulo> registros = new ArrayList();
+        
+        try {
+            ps = CON.Conectar().prepareStatement("Select id, codigo, nombre, precio_venta, stock from articulo"
+                    + " where codigo = ?");//*
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            if(rs.first()){
+                art = new Articulo(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDouble(4), rs.getInt(5));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ArticuloDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return art;
     }
-
+    
+    
+    
+    
+    
+    
     @Override
     public boolean insertar(Articulo obj) {
         resp = false;

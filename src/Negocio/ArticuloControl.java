@@ -32,9 +32,9 @@ public class ArticuloControl {
         this.obj = new Articulo();
     }
     
-    public DefaultTableModel listar(String texto){
+    public DefaultTableModel listar(String texto, int totalRegPagina, int numPagina){
     List<Articulo> lista = new ArrayList();
-    lista.addAll(DATOS.listar(texto));
+    lista.addAll(DATOS.listar(texto, totalRegPagina, numPagina));
     String[] titulos = {"Id", "Categoria Id", "Categoria", "Codigo", "Nombre", "Precio Venta", "Stock", "Descripcion", "Imagen", "Estado"};
         this.modeloTabla = new DefaultTableModel(null,titulos);
         //recorrer los items de la lista para llenar la tabla
@@ -74,6 +74,7 @@ public class ArticuloControl {
         }
         return items;
     }
+    
     //metodo para insertar
     public String insertar(int categoriaId, String codigo, String nombre, double precioVenta, int stock,
             String descripcion, String imagen){

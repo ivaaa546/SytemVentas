@@ -35,7 +35,16 @@ public class Articulo {
         this.imagen = imagen;
         this.activo = activo;
     }
-
+     public Articulo(int id, String codigo, String nombre, double precioVenta, int stock) {
+        this.id = id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precioVenta = precioVenta;
+        this.stock = stock;
+    }
+    
+    
+    
     public int getId() {
         return id;
     }
@@ -114,6 +123,12 @@ public class Articulo {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+    
+    //metodo de tipo toString
+    @Override
+    public String toString() {
+        return "Articulo{" + "id=" + id + ", categoriaId=" + categoriaId + ", categoriaNombre=" + categoriaNombre + ", codigo=" + codigo + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", stock=" + stock + ", descripcion=" + descripcion + ", imagen=" + imagen + ", activo=" + activo + '}';
     }
     
 }

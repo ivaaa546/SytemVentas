@@ -219,4 +219,24 @@ public class UsuarioControl {
         return this.registrosMostrados;
     }
     
+    //metodo para mandarle los datos al metodo login
+    public String login(String email, String clave){
+        String resp = "0";
+        Usuario u = this.DATOS.login(email, this.encriptar(clave));
+        if(u != null){
+            if(u.isActivo()){
+                Variables.usuarioId = u.getId();
+                Variables.rolId = u.getRolid();
+                Variables.rolNombre = u.getRolNombre();
+                Variables.usuarioNombre = u.getNombre();
+                Variables.usuarioEmail = u.getEmail();
+                
+                resp = "1";
+            }else{
+                resp = "2"; //1.15.00
+            }
+        }
+        return resp;
+    }
+    
 }

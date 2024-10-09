@@ -23,6 +23,21 @@ public class Usuario {
 
     public Usuario() {
     }
+    //constructor sin la variable clave
+
+    public Usuario(int id, int rolid, String rolNombre, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, boolean activo) {
+        this.id = id;
+        this.rolid = rolid;
+        this.rolNombre = rolNombre;
+        this.nombre = nombre;
+        this.tipoDocumento = tipoDocumento;
+        this.numDocumento = numDocumento;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.activo = activo;
+    }
+    
 
     public Usuario(int id, int rolid, String rolNombre, String nombre, String tipoDocumento, String numDocumento, String direccion, String telefono, String email, String clave, boolean activo) {
         this.id = id;

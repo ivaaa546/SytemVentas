@@ -256,4 +256,33 @@ public class UsuarioDao implements PaginadoInterface<Usuario> {
         }
         return resp;
     }
+    
+    public Usuario login(String email, String clave){
+        Usuario u = null;
+        try {
+            ps = CON.Conectar().prepareStatement("Select u.id, u.rol_id, r.nombre as rol_nombre, u.nombre, u.tipo_documento,"
+                    + " u.num_documento, u.direccion, u.telefono, u.email, u.activo from usuario u inner join rol r"
+                    + " on u.rol_id = r.id"//id
+                    + " where u.email = ? and clave = ?");//*
+            ps.setString(1, email);
+            ps.setString(2, clave);
+            rs = ps.executeQuery();
+            if(rs.first()){
+                u = new Usuario(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getBoolean(10));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return u;
+    }
+    
 }

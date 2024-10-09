@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-10-2024 a las 03:21:01
+-- Tiempo de generación: 09-10-2024 a las 07:27:42
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.1.25
 
@@ -189,9 +189,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `rol_id`, `nombre`, `tipo_documento`, `num_documento`, `direccion`, `telefono`, `email`, `clave`, `activo`) VALUES
-(1, 2, 'Karina', 'DPI', '3333333333', 'Carchá', '12345678', 'karina@gmail.com', 'e6f095e985e6762f1538b47ff1abda58dbe8ce088b16d8a5744fc179e9a2fc16', b'1'),
-(2, 3, 'Juan', 'PASAPORTE', '1212121212', 'Cobán', '1234555675', 'juansguarnizo@gmail.com', '8d23cf6c86e834a7aa6eded54c26ce2bb2e74903538c61bdd5d2197997ab2f72', b'1'),
-(3, 1, 'José', 'DPI', '4455643332', 'Chamelco', '66666666', 'josesitopro@gmail.com', '18beb4813723e788a1d79bcbf80802538ec813aa19ded2e9c21cbf08bed6bee3', b'1');
+(1, 2, 'Karina', 'DPI', '3333333333', 'Carchá', '12345678', 'karina@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
+(2, 3, 'Juan', 'PASAPORTE', '1212121212', 'Cobán', '1234555675', 'juansguarnizo@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
+(3, 1, 'José', 'DPI', '4455643332', 'Chamelco', '66666666', 'josesitopro@gmail.com', '8d23cf6c86e834a7aa6eded54c26ce2bb2e74903538c61bdd5d2197997ab2f72', b'1'),
+(8, 1, 'Ivancini', 'DPI', '13231231', 'Su casa', '12313213', 'ivan@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1');
 
 -- --------------------------------------------------------
 
@@ -275,9 +276,12 @@ ALTER TABLE `rol`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `fk_rol_id` (`rol_id`),
   ADD UNIQUE KEY `fk_nombre` (`nombre`),
-  ADD UNIQUE KEY `fk_email` (`email`);
+  ADD UNIQUE KEY `fk_email` (`email`),
+  ADD KEY `fk_rol_id` (`rol_id`) USING BTREE,
+  ADD KEY `rol_id` (`rol_id`) USING BTREE,
+  ADD KEY `rol_id_2` (`rol_id`) USING BTREE,
+  ADD KEY `rol_id_3` (`rol_id`) USING BTREE;
 
 --
 -- Indices de la tabla `venta`
@@ -337,7 +341,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

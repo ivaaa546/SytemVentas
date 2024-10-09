@@ -112,6 +112,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem7.setText("Usuarios");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         mnuAcceso.add(jMenuItem7);
 
         menuBar.add(mnuAcceso);
@@ -168,6 +173,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         contenedor.add(rol);
         rol.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+            frmUsuario u = new frmUsuario();
+            contenedor.add(u);
+            u.setVisible(true);
+            
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments

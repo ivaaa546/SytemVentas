@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2024 a las 23:09:00
+-- Tiempo de generación: 09-10-2024 a las 03:21:01
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -156,6 +156,15 @@ CREATE TABLE `rol` (
   `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `rol`
+--
+
+INSERT INTO `rol` (`id`, `nombre`, `descripcion`) VALUES
+(1, 'Administrador', 'Administrador del sistema'),
+(2, 'Vendedor', 'Vendedor del sistema'),
+(3, 'Bodeguero', 'Bodeguero del sistema');
+
 -- --------------------------------------------------------
 
 --
@@ -174,6 +183,15 @@ CREATE TABLE `usuario` (
   `clave` varchar(128) NOT NULL,
   `activo` bit(1) NOT NULL DEFAULT b'1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `rol_id`, `nombre`, `tipo_documento`, `num_documento`, `direccion`, `telefono`, `email`, `clave`, `activo`) VALUES
+(1, 2, 'Karina', 'DPI', '3333333333', 'Carchá', '12345678', 'karina@gmail.com', 'e6f095e985e6762f1538b47ff1abda58dbe8ce088b16d8a5744fc179e9a2fc16', b'1'),
+(2, 3, 'Juan', 'PASAPORTE', '1212121212', 'Cobán', '1234555675', 'juansguarnizo@gmail.com', '8d23cf6c86e834a7aa6eded54c26ce2bb2e74903538c61bdd5d2197997ab2f72', b'1'),
+(3, 1, 'José', 'DPI', '4455643332', 'Chamelco', '66666666', 'josesitopro@gmail.com', '18beb4813723e788a1d79bcbf80802538ec813aa19ded2e9c21cbf08bed6bee3', b'1');
 
 -- --------------------------------------------------------
 
@@ -313,13 +331,13 @@ ALTER TABLE `persona`
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Datos;
-import Entidades.Categoria;
 import Entidades.Rol;
 import database.Conexion;
 import java.sql.PreparedStatement;

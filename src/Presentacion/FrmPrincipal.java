@@ -4,6 +4,8 @@
  */
 package Presentacion;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc
@@ -199,6 +201,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         cargarOpciones();
+        JOptionPane.showMessageDialog(null, "Bienvenido[a] " + Negocio.Variables.rolNombre + "[a] " + Negocio.Variables.usuarioNombre);
     }//GEN-LAST:event_formWindowOpened
 
     private void mnuSalirSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirSActionPerformed

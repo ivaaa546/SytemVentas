@@ -3,11 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Negocio/Variables.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Negocio/UsuarioControl.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Entidades/Usuario.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Datos/RolDao.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Presentacion/FrmPrincipal.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Entidades/Rol.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Presentacion/FrmLogin.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Negocio/RolControl.java</file>
             <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Presentacion/frmUsuario.java</file>
-=======
-            <file>file:/C:/Users/Mariela/Desktop/SytemVentas/src/Negocio/UsuarioControl.java</file>
->>>>>>> 0b586dca982c37dade4cb5fca3832ed2f168d4eb
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Datos/UsuarioDao.java</file>
+            <file>file:/C:/Users/chubj/OneDrive/Desktop/Mimama%20no%20me%20mima/SytemVentas/src/Presentacion/FrmRol.java</file>
         </group>
     </open-files>
 </project-private>

@@ -8,17 +8,7 @@ package Presentacion;
 import Entidades.Rol;
 
 import Negocio.UsuarioControl;
-import java.awt.Image;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 
@@ -626,10 +616,23 @@ public class frmUsuario extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
+        if (cmbRol.getSelectedIndex() == 0)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un rol", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
+            cmbRol.requestFocus();
+            return;
+        }
+        
         if(txtNombre.getText().length() == 0 || txtNombre.getText().length() > 70){
             JOptionPane.showMessageDialog(this, "Debe ingresar un nombre, no mayor a 70 "
                     + "caracteres, es obligatorio", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
             txtNombre.requestFocus();
+            return;
+        }
+        if (cmbTipoDocumento.getSelectedIndex() == 0)
+        {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el tipo de documento para identificar al usuario", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
+            cmbTipoDocumento.requestFocus();
             return;
         }
          if(txtEmail.getText().length() == 0 || txtEmail.getText().length() > 50){

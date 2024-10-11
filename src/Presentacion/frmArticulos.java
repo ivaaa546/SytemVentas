@@ -52,6 +52,7 @@ public class frmArticulos extends javax.swing.JInternalFrame {
         this.CONTROL = new ArticuloControl();
         this.listar("", false);
         this.primeraCarga = false;
+        this.Paginar();
         
         //deshabilitamos el panelde mantenimiento al cargar el formulario
         tabGeneral.setEnabledAt(1, false);

@@ -85,6 +85,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuProveedores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuProveedores.setText("Proveedores");
+        mnuProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuProveedoresActionPerformed(evt);
+            }
+        });
         mnuCompras.add(mnuProveedores);
 
         mnuIngresos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -98,6 +103,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuClientes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_DOWN_MASK));
         mnuClientes.setText("Clientes");
+        mnuClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuClientesActionPerformed(evt);
+            }
+        });
         mnuCVentas.add(mnuClientes);
 
         mnuVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
@@ -208,6 +218,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_mnuSalirSActionPerformed
+
+    private void mnuProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProveedoresActionPerformed
+       frmProveedores pro = new frmProveedores();
+       contenedor.add(pro);
+       pro.setVisible(true);
+    }//GEN-LAST:event_mnuProveedoresActionPerformed
+
+    private void mnuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuClientesActionPerformed
+       frmClientes cli = new frmClientes();
+       contenedor.add(cli);
+       cli.setVisible(true);
+    }//GEN-LAST:event_mnuClientesActionPerformed
 
     private void cargarOpciones(){
         if(Negocio.Variables.rolNombre.equals("Administrador")){

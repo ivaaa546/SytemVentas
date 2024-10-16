@@ -48,6 +48,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenu();
         mnuSalirS = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        mnuCambioUsuario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Ventas");
@@ -162,6 +164,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
         mnuSalir.add(mnuSalirS);
+        mnuSalir.add(jSeparator1);
+
+        mnuCambioUsuario.setText("Cambio de Usuario");
+        mnuCambioUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCambioUsuarioActionPerformed(evt);
+            }
+        });
+        mnuSalir.add(mnuCambioUsuario);
 
         menuBar.add(mnuSalir);
 
@@ -230,6 +241,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
        contenedor.add(cli);
        cli.setVisible(true);
     }//GEN-LAST:event_mnuClientesActionPerformed
+
+    private void mnuCambioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCambioUsuarioActionPerformed
+        // TODO add your handling code here:
+        
+        FrmLogin fl = new FrmLogin();
+        this.dispose();
+        fl.toFront();
+        fl.setVisible(true);
+        
+        
+    }//GEN-LAST:event_mnuCambioUsuarioActionPerformed
 
     private void cargarOpciones(){
         if(Negocio.Variables.rolNombre.equals("Administrador")){
@@ -302,11 +324,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAcceso;
     private javax.swing.JMenu mnuAlmacen;
     private javax.swing.JMenuItem mnuArticulos;
     private javax.swing.JMenu mnuCVentas;
+    private javax.swing.JMenuItem mnuCambioUsuario;
     private javax.swing.JMenuItem mnuCategorias;
     private javax.swing.JMenuItem mnuClientes;
     private javax.swing.JMenu mnuCompras;

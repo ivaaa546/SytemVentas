@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2024 a las 04:56:14
+-- Tiempo de generación: 15-10-2024 a las 05:08:01
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.1.25
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -144,6 +144,18 @@ CREATE TABLE `persona` (
   `activo` bit(1) NOT NULL DEFAULT b'1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`id`, `tipo_persona`, `nombre`, `tipo_documento`, `num_documento`, `direccion`, `telefono`, `email`, `activo`) VALUES
+(1, 'Proveedor', 'Juan Pedro', 'NIT', '123123123', 'Guatemala ', '123123', 'juanpedro@gmail.com', b'1'),
+(3, 'Cliente', 'Max', 'NIT', '4322342', 'Cobán', '5342524543', 'max@gmail.com', b'1'),
+(4, 'Cliente', 'Juanito Alcachofa', 'DPI', '65423454', 'Carcha', '5434543', 'juanito@gmail.com', b'1'),
+(5, 'Proveedor', 'Marcos Tun', 'NIT', '98912391', 'Cobán', '12312', 'marcos@gmail.com', b'1'),
+(6, 'Proveedor', 'Toni', 'NIT', '21312312', 'Tactic', '23123123', 'toni@gmail.com', b'1'),
+(7, 'Cliente', 'Mateo', 'PASAPORTE', '23452345', 'Santa Cruz', '52345234', 'mateo@gmail.com', b'1');
+
 -- --------------------------------------------------------
 
 --
@@ -190,14 +202,9 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id`, `rol_id`, `nombre`, `tipo_documento`, `num_documento`, `direccion`, `telefono`, `email`, `clave`, `activo`) VALUES
 (1, 2, 'Karina', 'DPI', '3333333333', 'Carchá', '12345678', 'karina@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
-(2, 3, 'Juan', 'PASAPORTE', '1212121212', 'Cobán', '1234555675', 'juansguarnizo@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
+(2, 3, 'Juan M', 'PASAPORTE', '1212121212', 'Cobán', '1234555675', 'juansguarnizo@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
 (3, 1, 'José', 'DPI', '4455643332', 'Chamelco', '66666666', 'josesitopro@gmail.com', '8d23cf6c86e834a7aa6eded54c26ce2bb2e74903538c61bdd5d2197997ab2f72', b'1'),
-(8, 1, 'Ivancini', 'DPI', '13231231', 'Su casa', '12313213', 'ivan@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
-(9, 1, 'Julio', 'DPI', '55555', '', '', 'Julio@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
-(10, 3, 'Luis Tilin Insano', 'PASAPORTE', '666', 'TilinLandia', '77777777', 'Luis@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
-(11, 3, 'Joaquin', 'PASAPORTE', '12121212', 'Chamelco', '1212121', 'Joaquin@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1'),
-(12, 2, 'Josue', 'CEDULA', '1111111111111', 'Coban', '22222222', 'Josue@gmail.com', '8d23cf6c86e834a7aa6eded54c26ce2bb2e74903538c61bdd5d2197997ab2f72', b'1'),
-(13, 2, 'Roberto', 'CEDULA', '9999999', 'Chamelco', '33333333', 'Rob@gmail.com', '91a73fd806ab2c005c13b4dc19130a884e909dea3f72d46e30266fe1a1f588d8', b'1');
+(8, 1, 'Ivancini', 'DPI', '13231231', 'Su casa', '12313213', 'ivan@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', b'1');
 
 -- --------------------------------------------------------
 
@@ -334,7 +341,7 @@ ALTER TABLE `ingreso`
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -346,7 +353,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

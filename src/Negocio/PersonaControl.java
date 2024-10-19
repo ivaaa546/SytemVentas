@@ -5,18 +5,9 @@
 package Negocio;
 
 import Datos.PersonaDao;
-import Datos.RolDao;
-import Datos.UsuarioDao;
 import Entidades.Persona;
-import Entidades.Rol;
-import Entidades.Usuario;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**

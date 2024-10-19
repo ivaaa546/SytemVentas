@@ -7,7 +7,6 @@ package Datos;
 
 import Datos.Interfaces.PaginadoInterface;
 import Entidades.Persona;
-import Entidades.Usuario;
 import database.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -202,7 +201,7 @@ public class PersonaDao implements PaginadoInterface<Persona> {
     public int total() {
        int totalRegistros = 0;
         try {
-            ps = CON.Conectar().prepareStatement("Select count(id) from usuario");
+            ps = CON.Conectar().prepareStatement("Select count(id) from persona");
             rs = ps.executeQuery();
             while(rs.next()){
                 totalRegistros = rs.getInt("COUNT(id)");
@@ -225,7 +224,7 @@ public class PersonaDao implements PaginadoInterface<Persona> {
     public boolean existe(String texto) {
         resp = false;
         try {
-            ps = CON.Conectar().prepareStatement("Select nombre from usuario where nombre = ?");
+            ps = CON.Conectar().prepareStatement("Select nombre from persona where nombre = ?");
             ps.setString(1, texto);
             rs = ps.executeQuery();
             rs.last();
@@ -246,32 +245,6 @@ public class PersonaDao implements PaginadoInterface<Persona> {
         return resp;
     }
     
-    public Usuario login(String email, String clave){
-        Usuario u = null;
-        try {
-            ps = CON.Conectar().prepareStatement("Select u.id, u.rol_id, r.nombre as rol_nombre, u.nombre, u.tipo_documento,"
-                    + " u.num_documento, u.direccion, u.telefono, u.email, u.activo from usuario u inner join rol r"
-                    + " on u.rol_id = r.id"//id
-                    + " where u.email = ? and clave = ?");//*
-            ps.setString(1, email);
-            ps.setString(2, clave);
-            rs = ps.executeQuery();
-            if(rs.first()){
-                u = new Usuario(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getBoolean(10));
-            }
-            ps.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(PersonaDao.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        finally{
-            ps = null;
-            rs = null;
-            CON.Desconectar();
-        }
-        return u;
-    }
+    
     
 }

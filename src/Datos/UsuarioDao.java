@@ -236,7 +236,7 @@ public class UsuarioDao implements PaginadoInterface<Usuario> {
     public boolean existe(String texto) {
         resp = false;
         try {
-            ps = CON.Conectar().prepareStatement("Select nombre from usuario where email = ?");
+            ps = CON.Conectar().prepareStatement("Select email from usuario where email = ?");
             ps.setString(1, texto);
             rs = ps.executeQuery();
             rs.last();

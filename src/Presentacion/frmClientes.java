@@ -312,7 +312,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
         });
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setText("Email*:");
+        jLabel12.setText("Email:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -559,12 +559,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
             cmbTipoDocumento.requestFocus();
             return;
         }
-         if(txtEmail.getText().length() == 0 || txtEmail.getText().length() > 50){
-            JOptionPane.showMessageDialog(this, "Debe ingresar un Email, no mayor a 50 "
-                    + "caracteres, es obligatorio", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
-            txtEmail.requestFocus();
-            return;
-        }
+        
 
          if(txtNumDocumento.getText().length() > 20){
             JOptionPane.showMessageDialog(this, "Debe ingresar un numero de documento, no mayor a 20 caracteres", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
@@ -581,6 +576,11 @@ public class frmClientes extends javax.swing.JInternalFrame {
             txtNumDocumento.requestFocus();
             return;
         }
+          if(txtEmail.getText().length() > 50){
+            JOptionPane.showMessageDialog(this, "Debe ingresar un Email, no mayor a 50 caracteres", "Sistema de Ventas", JOptionPane.WARNING_MESSAGE);
+            txtEmail.requestFocus();
+            return;
+        }
         
 
         String resp;
@@ -590,7 +590,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
                     (String)cmbTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),
                     txtEmail.getText());
             if(resp.equals("OK")){
-                this.mensajeOk("Usuario actualizado correctamente");
+                this.mensajeOk("Cliente actualizado correctamente");
                 this.Limpiar();
                 this.listar("", false);
                 tabGeneral.setEnabledAt(1,false);
@@ -605,7 +605,7 @@ public class frmClientes extends javax.swing.JInternalFrame {
                     (String)cmbTipoDocumento.getSelectedItem(), txtNumDocumento.getText(), txtDireccion.getText(), txtTelefono.getText(),
                     txtEmail.getText());
             if(resp.equals("OK")){
-                this.mensajeOk("Usuario registrado correctamente");
+                this.mensajeOk("Cliente registrado correctamente");
                 this.Limpiar();
                 this.listar("", false);
                 tabGeneral.setEnabledAt(1,false);

@@ -118,7 +118,7 @@ public class PersonaControl {
                 obj.setId(id);
                 obj.setTipoPersona(tipoPersona);
                 obj.setNombre(nombre);
-                obj.setTipoDoc(Telefono);
+                obj.setTipoDoc(tipoDocumento);
                 obj.setNumDoc(numDocumento);
                 obj.setDireccion(Direccion);
                 obj.setTelefono(Telefono);

@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,4 +239,47 @@ public class VentasDao  implements CrudVentasInterface<Ventas, DetalleVentas> {
         return resp;
     }   
     
+    public List<Ventas> listarConsulta(int totalRegPagina, int numPagina, Date fechaInicio, Date fechaFin) {
+    // Creamos un objeto de tipo lista
+    List<Ventas> registros = new ArrayList<>();
+
+    try {
+        ps = CON.Conectar().prepareStatement("SELECT v.id, v.usuario_id, u.nombre AS usuario_nombre, v.persona_id, p.nombre, v.tipo_comprobante, v.serie_comprobante, v.num_comproante, v.fecha, v.impuesto, v.total, v.estado " +
+                "FROM venta v " +
+                "INNER JOIN persona p ON v.persona_id = p.id " +
+                "INNER JOIN usuario u ON v.usuario_id = u.id " +
+                "WHERE v.fecha BETWEEN ? AND ? " +
+                "ORDER BY v.id ASC " +
+                "LIMIT ?, ?");
+
+        // Asignamos los valores de los parámetros
+        ps.setDate(1, new java.sql.Date(fechaInicio.getTime()));
+        ps.setDate(2, new java.sql.Date(fechaFin.getTime()));
+        ps.setInt(3, (numPagina - 1) * totalRegPagina);
+        ps.setInt(4, totalRegPagina);
+
+        // Ejecutamos la consulta y procesamos los resultados
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            registros.add(new Ventas(
+                rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5),
+                rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9),
+                rs.getDouble(10), rs.getDouble(11), rs.getString(12)
+            ));
+        }
+        
+        // Cerramos los recursos
+        ps.close();
+        rs.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+    } finally {
+        ps = null;
+        rs = null;
+        CON.Desconectar();
+    }
+    return registros;
+}
+
 }

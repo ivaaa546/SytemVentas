@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -235,5 +237,49 @@ public class IngresoDao  implements CrudIngresoInterface<Ingreso, DetalleIngreso
         }
         return resp;
     }   
+
+    //busqueda entre dos fechas
+    public List<Ingreso> listarConsulta(int totalRegPagina, int numPagina, Date fechaInicio, Date fechaFin) {
+    // Creamos un objeto de tipo lista
+    List<Ingreso> registros = new ArrayList<>();
+
+    try {
+        ps = CON.Conectar().prepareStatement("SELECT i.id, i.usuario_id, u.nombre AS usuario_nombre, i.persona_id, p.nombre AS persona_nombre, i.tipo_comprobante, i.serie_comprobante, i.num_comproante, i.fecha, i.impuesto, i.total, i.estado " +
+                "FROM ingreso i " +
+                "INNER JOIN persona p ON i.persona_id = p.id " +
+                "INNER JOIN usuario u ON i.usuario_id = u.id " +
+                "WHERE i.fecha BETWEEN ? AND ? " +
+                "ORDER BY i.id ASC " +
+                "LIMIT ?, ?");
+        
+        // Asignamos los valores de los parámetros
+        ps.setDate(1, new java.sql.Date(fechaInicio.getTime()));
+        ps.setDate(2, new java.sql.Date(fechaFin.getTime()));
+        ps.setInt(3, (numPagina - 1) * totalRegPagina);
+        ps.setInt(4, totalRegPagina);
+
+        // Ejecutamos la consulta y procesamos los resultados
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            registros.add(new Ingreso(
+                rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5),
+                rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9), 
+                rs.getDouble(10), rs.getDouble(11), rs.getString(12)
+            ));
+        }
+        
+        // Cerramos los recursos
+        ps.close();
+        rs.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(IngresoDao.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, ex.getMessage());
+    } finally {
+        ps = null;
+        rs = null;
+        CON.Desconectar();
+    }
+    return registros;
+}
     
 }

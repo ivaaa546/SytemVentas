@@ -11,6 +11,7 @@ import Entidades.Ventas;
 import Entidades.DetalleVentas;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -158,5 +159,39 @@ public class VentasControl {
     
     public int totalMostrados(){
         return this.registrosMostrados;
+    }
+    
+      //metodo para obtener la lista de la tabla articulo
+    public DefaultTableModel listarConsulta( int totalRegPagina, int numPagina, Date fechaInicio, Date fechaFinal){
+        List<Ventas> lista = new ArrayList();
+        lista.addAll(DATOS.listarConsulta(totalRegPagina, numPagina,fechaInicio,fechaFinal));
+        String[] titulos = {"Id", "Usuario Id", "Usuario", "Cliente Id", "Cliente", "Tipo Comprobante", "Serie", "Num Comprobante", "Fecha", 
+            "Impuesto", "Total", "Estado"};
+        this.modeloTabla = new DefaultTableModel(null,titulos);
+        
+        //recorrer los items de la lista para llenar la tabla
+        String estado;
+        String[] registro = new String[12];
+        this.registrosMostrados = 0;
+        //vamos a definir el formato para la fecha
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+        
+        for(Ventas item:lista){
+            registro[0] = Integer.toString(item.getId());
+            registro[1] = Integer.toString(item.getUsuarioId());
+            registro[2] = item.getUsuarioNombre();
+            registro[3] = Integer.toString(item.getPersonaId());
+            registro[4] = item.getPersonaNombre();
+            registro[5] = item.getTipoComprobante();
+            registro[6] = item.getSerieComprobante();
+            registro[7] = item.getNumComprobante();
+            registro[8] = sdf.format(item.getFecha());
+            registro[9] = Double.toString(item.getImpuesto());
+            registro[10] = Double.toString(item.getTotal());
+            registro[11] = item.getEstado();
+            this.modeloTabla.addRow(registro);
+            this.registrosMostrados = this.registrosMostrados + 1;
+        }
+        return this.modeloTabla;//51.31
     }
 }

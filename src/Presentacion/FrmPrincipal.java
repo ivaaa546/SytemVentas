@@ -156,10 +156,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem8.setText("Consulta Compras");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(jMenuItem8);
 
         jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_DOWN_MASK));
         jMenuItem9.setText("Consulta Ventas");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(jMenuItem9);
 
         menuBar.add(mnuConsultas);
@@ -274,6 +284,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
         contenedor.add(v);
        v.setVisible(true);
     }//GEN-LAST:event_mnuVentasActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+         frmConsultaCompras v = new frmConsultaCompras(this);
+        contenedor.add(v);
+       v.setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        frmConsultaVentas v = new frmConsultaVentas(this);
+        contenedor.add(v);
+       v.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void cargarOpciones(){
         if(Negocio.Variables.rolNombre.equals("Administrador")){

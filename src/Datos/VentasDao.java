@@ -4,20 +4,28 @@
  */
 package Datos;
 
-import Datos.Interfaces.CrudIngresoInterface;
+
+import Datos.Interfaces.CrudVentasInterface;
 import Entidades.DetalleVentas;
 import Entidades.Ventas;
+import com.mysql.jdbc.Statement;
 import database.Conexion;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author pc
  */
-public class VentasDao implements CrudIngresoInterface<Ventas, DetalleVentas> {
-     //declaramos una constante para instancia a la clase conexion
+public class VentasDao  implements CrudVentasInterface<Ventas, DetalleVentas> {
+    //declaramos una constante para instancia a la clase conexion
     private final Conexion CON;
     
     //creamos un objeto de tipo Statement o Preparedstatement
@@ -36,31 +44,198 @@ public class VentasDao implements CrudIngresoInterface<Ventas, DetalleVentas> {
 
     @Override
     public List<Ventas> listar(String texto, int totalRegPagina, int numPagina) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //creamos un objeto de tipo lista
+        List<Ventas> registros = new ArrayList();
+        
+        try {
+            ps = CON.Conectar().prepareStatement("Select v.id, v.usuario_id, u.nombre as usuario_nombre, v.persona_id, p.nombre, v.tipo_comprobante, v.serie_comprobante, v.num_comproante, v.fecha, v.impuesto, v.total, v.estado from venta v inner join persona p on v.persona_id = p.id inner join usuario u on v.usuario_id = u.id"
+                    + " where v.num_comproante Like ? order by v.id asc Limit ?, ?");//*
+            ps.setString(1, "%" + texto + "%");
+            ps.setInt(2, (numPagina - 1) * totalRegPagina);
+            ps.setInt(3, totalRegPagina);//*
+            rs = ps.executeQuery();
+            while(rs.next()){
+                registros.add(new Ventas(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4), rs.getString(5), 
+                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9),  rs.getDouble(10), rs.getDouble(11),
+                        rs.getString(12)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return registros;
     }
 
     @Override
     public List<DetalleVentas> listarDetalle(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        //creamos un objeto de tipo lista
+        List<DetalleVentas> registros = new ArrayList();
+        
+        try {
+            ps = CON.Conectar().prepareStatement("select a.id, a.codigo, a.nombre, d.cantidad, d.precio, d.descuento, (d.cantidad * precio) as sub_total from detalle_venta d inner join articulo a on d.articulo_id = a.id where d.venta_id = ?");
+            ps.setInt(1, id);
+            
+            rs = ps.executeQuery();
+            while(rs.next()){
+                registros.add(new DetalleVentas(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDouble(5),
+                rs.getDouble(6), rs.getDouble(7)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return registros;
     }
 
     @Override
     public boolean insertar(Ventas obj) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        resp = false;
+        Connection conn = null;
+        try {
+            conn = CON.Conectar();
+            conn.setAutoCommit(false);
+            String sqlInsertIngreso = "Insert into venta (persona_id, usuario_id, fecha, tipo_comprobante, serie_comprobante, num_comproante, impuesto, total, estado)"
+                    +" values (?, ?, now(), ?, ?, ?, ?, ?, ?)";
+            ps = CON.Conectar().prepareStatement(sqlInsertIngreso, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, obj.getPersonaId());
+            ps.setInt(2, obj.getUsuarioId());
+            ps.setString(3, obj.getTipoComprobante());
+            ps.setString(4, obj.getSerieComprobante());
+            ps.setString(5, obj.getNumComprobante());
+            ps.setDouble(6, obj.getImpuesto());
+            ps.setDouble(7, obj.getTotal());
+            ps.setString(8, "Aceptado");
+            
+            //realizar el proceso de lectura o envio de informacion a la clase detalle venta
+            int filasAfectadas = ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            int idGenerado = 0;
+            if(rs.next()){
+                idGenerado = rs.getInt(1);
+            }
+            if(filasAfectadas == 1){
+                String sqlInsertDetalle = "insert into detalle_venta(venta_id, articulo_id, cantidad, precio, descuento) values (?, ?, ?, ?, ?)";
+                //usar la nueva conexion para generar esta insersion
+                ps = conn.prepareStatement(sqlInsertDetalle);
+                
+                //recorrer el resulset para obtener los diferentes detalles de venta
+                for(DetalleVentas Item:obj.getDetalles()){
+                    ps.setInt(1, idGenerado);
+                    ps.setInt(2, Item.getArticuloId());
+                    ps.setInt(3, Item.getCantidad());
+                    ps.setDouble(4, Item.getPrecio());
+                    ps.setDouble(5, Item.getDescuento());
+                    resp = ps.executeUpdate() > 0;
+                }
+                conn.commit();
+            }else{
+                conn.rollback();
+            }
+        } catch (SQLException ex) {
+                try {
+                    if(conn != null){
+                    conn.rollback();
+                    }
+                } catch (SQLException ex1) {
+                    Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            try {
+                if(rs != null) rs.close();
+                if(ps != null) rs.close();
+                if(conn != null) rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return resp;
     }
 
     @Override
     public boolean anular(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        resp = false;
+        try {
+            ps = CON.Conectar().prepareStatement("Update venta set estado = 'Anulado' where id = ?");
+            ps.setInt(1, id);
+            if(ps.executeUpdate()>0){
+                resp = true;
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            CON.Desconectar();
+        }
+        return resp;
     }
 
     @Override
     public int total() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int totalRegistros = 0;
+        try {
+            ps = CON.Conectar().prepareStatement("Select count(id) from venta");
+            rs = ps.executeQuery();
+            while(rs.next()){
+                totalRegistros = rs.getInt("COUNT(id)");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return totalRegistros;
     }
 
     @Override
     public boolean existe(String texto, String texto2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        resp = false;
+        try {
+            ps = CON.Conectar().prepareStatement("Select id from venta where serie_comprobante = ? and num_comproante = ?");
+            ps.setString(1, texto);
+            ps.setString(2, texto2);
+            rs = ps.executeQuery();
+            rs.last();
+            if(rs.getRow() > 0){
+                resp = true;
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(VentasDao.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        finally{
+            ps = null;
+            rs = null;
+            CON.Desconectar();
+        }
+        return resp;
+    }   
+    
 }

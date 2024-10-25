@@ -119,6 +119,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuVentas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         mnuVentas.setText("Ventas");
+        mnuVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVentasActionPerformed(evt);
+            }
+        });
         mnuCVentas.add(mnuVentas);
 
         menuBar.add(mnuCVentas);
@@ -263,6 +268,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         contenedor.add(fl);
        fl.setVisible(true);
     }//GEN-LAST:event_mnuIngresosActionPerformed
+
+    private void mnuVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVentasActionPerformed
+        frmVentas v = new frmVentas(this);
+        contenedor.add(v);
+       v.setVisible(true);
+    }//GEN-LAST:event_mnuVentasActionPerformed
 
     private void cargarOpciones(){
         if(Negocio.Variables.rolNombre.equals("Administrador")){

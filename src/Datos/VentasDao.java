@@ -8,6 +8,7 @@ package Datos;
 import Datos.Interfaces.CrudVentasInterface;
 import Entidades.DetalleVentas;
 import Entidades.Ventas;
+import com.itextpdf.text.Document;
 import com.mysql.jdbc.Statement;
 import database.Conexion;
 import java.sql.Connection;
@@ -78,8 +79,9 @@ public class VentasDao  implements CrudVentasInterface<Ventas, DetalleVentas> {
     public List<DetalleVentas> listarDetalle(int id) {
         //creamos un objeto de tipo lista
         List<DetalleVentas> registros = new ArrayList();
-        
+        Document document = new Document();
         try {
+            
             ps = CON.Conectar().prepareStatement("select a.id, a.codigo, a.nombre, d.cantidad, d.precio, d.descuento, (d.cantidad * precio) as sub_total from detalle_venta d inner join articulo a on d.articulo_id = a.id where d.venta_id = ?");
             ps.setInt(1, id);
             

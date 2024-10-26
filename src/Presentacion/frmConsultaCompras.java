@@ -6,6 +6,7 @@ package Presentacion;
 
 import Entidades.Categoria;
 import Entidades.GenerarPDFCompras;
+import Entidades.GenerarPDFVentas;
 import Negocio.ArticuloControl;
 import Negocio.IngresoControl;
 import java.awt.Image;
@@ -854,7 +855,13 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPDFComprasActionPerformed
 
     private void btnPDFCompras2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCompras2ActionPerformed
-        GenerarPDFCompras.generatePDF2();
+            try {
+        GenerarPDFCompras.generatePDF2(TablaDetalles);  // Asegúrate de pasar el nombre correcto de tu JTable
+        JOptionPane.showMessageDialog(this, "PDF generado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_btnPDFCompras2ActionPerformed
 
     private void Limpiar(){

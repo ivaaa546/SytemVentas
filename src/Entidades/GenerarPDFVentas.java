@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -66,8 +67,8 @@ public class GenerarPDFVentas {
             // Agregar las filas al PDF
             while (rs.next()) {
                 tabla.addCell(rs.getString("id"));
-                tabla.addCell(rs.getString("cliente"));
                 tabla.addCell(rs.getString("usuario"));
+                tabla.addCell(rs.getString("cliente"));
                 tabla.addCell(rs.getString("tipo_comprobante"));
                 tabla.addCell(rs.getString("serie_comprobante"));
                 tabla.addCell(rs.getString("num_comproante"));
@@ -90,41 +91,41 @@ public class GenerarPDFVentas {
         }
    }
      
-      public static void generatePDF2() {
-       try {
-           Document document = new Document();
-           PdfWriter.getInstance(document, new FileOutputStream("ReporteVenta.pdf"));
-           document.open();
-           
-           // Recupera los datos de la base de datos y agrega al PDF
-           Connection conn = Conectar.getConnection();
-           Statement stmt = conn.createStatement();
-           ResultSet rs = stmt.executeQuery("select a.id, a.codigo, a.nombre, d.cantidad, d.precio, d.descuento, (d.cantidad * precio) as sub_total from detalle_venta d inner join articulo a on d.articulo_id = a.id");
-           
-           while (rs.next()) {
-               String id = rs.getString("id");
-               String codigo = rs.getString("codigo");
-               String articulo = rs.getString("nombre");
-               String cantidad = rs.getString("cantidad");
-               String precio = rs.getString("precio");
-               String descuento =rs.getString("descuento");
-               String subtotal = rs.getString("sub_total");
-               
-               // Agrega las columnas al PDF
-               document.add(new Paragraph("id: " + id));
-               document.add(new Paragraph("codigo: " + codigo));
-               document.add(new Paragraph("nombre: " + articulo));
-               document.add(new Paragraph("cantidad: " + cantidad));
-               document.add(new Paragraph("precio: " + precio));
-               document.add(new Paragraph("descuento: " + descuento));
-               document.add(new Paragraph("sub_total: " + subtotal));
-           }
-           
-           document.close();
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
+      public static void generatePDF2(JTable table) {
+        Document document = new Document();
+        try {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String nombreArchivo = "Comprobante Ventas" + timestamp + ".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(nombreArchivo));
+            document.open();
+            
+            String texto = "Comprobante Ventas";
+            Paragraph parrafo = new Paragraph(texto);
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.setSpacingAfter(20f);
+            document.add(parrafo);
+            
+            PdfPTable pdfTable = new PdfPTable(table.getColumnCount());
+            pdfTable.setWidthPercentage(100);
+
+            // Agregar encabezados
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                pdfTable.addCell(table.getColumnName(i));
+            }
+
+            // Agregar datos de las filas
+            for (int row = 0; row < table.getRowCount(); row++) {
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                    pdfTable.addCell(table.getValueAt(row, col).toString());
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
    /*public static void main(String[] args) {
        generatePDF();
    }*/

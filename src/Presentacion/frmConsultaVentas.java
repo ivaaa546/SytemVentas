@@ -966,7 +966,13 @@ public class frmConsultaVentas extends javax.swing.JInternalFrame {
 
     private void btnPDFVentas2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFVentas2ActionPerformed
         // TODO add your handling code here:
-        GenerarPDFVentas.generatePDF2();
+           try {
+        GenerarPDFVentas.generatePDF2(TablaDetalles);  // Asegúrate de pasar el nombre correcto de tu JTable
+        JOptionPane.showMessageDialog(this, "PDF generado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_btnPDFVentas2ActionPerformed
 
 

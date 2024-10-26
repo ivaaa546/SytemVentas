@@ -250,7 +250,6 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
 
         tabGeneral = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        txtNombreB = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -267,6 +266,7 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
         lblTotalRegistros2 = new javax.swing.JLabel();
         dtfecha3 = new com.toedter.calendar.JDateChooser();
         btnPDFCompras = new javax.swing.JButton();
+        btnPDFCompras1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -301,8 +301,6 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-
-        txtNombreB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setText("Buscar");
@@ -372,10 +370,17 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
         lblTotalRegistros2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalRegistros2.setText("Fecha de Incio");
 
-        btnPDFCompras.setText("Generar PDF");
+        btnPDFCompras.setText("Generar PDF General");
         btnPDFCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPDFComprasActionPerformed(evt);
+            }
+        });
+
+        btnPDFCompras1.setText("Generar PDF para busqueda seleccionada");
+        btnPDFCompras1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPDFCompras1ActionPerformed(evt);
             }
         });
 
@@ -402,12 +407,14 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel14)
                                         .addGap(46, 46, 46)
                                         .addComponent(lblTotalRegistros)
-                                        .addGap(158, 158, 158)
-                                        .addComponent(btnPDFCompras))
+                                        .addGap(55, 55, 55)
+                                        .addComponent(btnPDFCompras)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnPDFCompras1))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(cboTotalRegPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(312, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -422,9 +429,7 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
                         .addComponent(btnBuscar)
                         .addGap(55, 55, 55)
                         .addComponent(btnNuevo)
-                        .addGap(47, 47, 47)
-                        .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnVerIngreso)
                         .addGap(157, 157, 157))))
         );
@@ -434,9 +439,7 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVerIngreso))
+                        .addComponent(btnVerIngreso)
                         .addGap(38, 38, 38))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -460,7 +463,8 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
                             .addComponent(lblTotalRegistros)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14)
-                            .addComponent(btnPDFCompras))
+                            .addComponent(btnPDFCompras)
+                            .addComponent(btnPDFCompras1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cboNumPag1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -864,6 +868,15 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnPDFCompras2ActionPerformed
 
+    private void btnPDFCompras1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPDFCompras1ActionPerformed
+       try {
+        GenerarPDFCompras.generatePDF3(tablaListado);  // Asegúrate de pasar el nombre correcto de tu JTable
+        JOptionPane.showMessageDialog(this, "PDF generado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnPDFCompras1ActionPerformed
+
     private void Limpiar(){
       txtNombreProveedor.setText("");
         txtIdProveedor.setText("");
@@ -898,6 +911,7 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnPDFCompras;
+    private javax.swing.JButton btnPDFCompras1;
     private javax.swing.JButton btnPDFCompras2;
     private javax.swing.JButton btnQuitar;
     private javax.swing.JButton btnVer;
@@ -931,7 +945,6 @@ public class frmConsultaCompras extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCodigo;
     public javax.swing.JTextField txtIdProveedor;
     private javax.swing.JTextField txtImpuesto;
-    private javax.swing.JTextField txtNombreB;
     public javax.swing.JTextField txtNombreProveedor;
     private javax.swing.JTextField txtNumComprobante;
     private javax.swing.JTextField txtSerieComprobante;

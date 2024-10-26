@@ -124,4 +124,39 @@ public class GenerarPDFCompras {
    /*public static void main(String[] args) {
        generatePDF();
    }*/
+        public static void generatePDF3(JTable table) {
+        Document document = new Document();
+        try {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String nombreArchivo = "Reporte Compras" + timestamp + ".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(nombreArchivo));
+            document.open();
+            
+            String texto = "Reporte Compras";
+            Paragraph parrafo = new Paragraph(texto);
+            parrafo.setAlignment(Paragraph.ALIGN_CENTER);
+            parrafo.setSpacingAfter(20f);
+            document.add(parrafo);
+            
+            PdfPTable pdfTable = new PdfPTable(table.getColumnCount());
+            pdfTable.setWidthPercentage(100);
+
+            // Agregar encabezados
+            for (int i = 0; i < table.getColumnCount(); i++) {
+                pdfTable.addCell(table.getColumnName(i));
+            }
+
+            // Agregar datos de las filas
+            for (int row = 0; row < table.getRowCount(); row++) {
+                for (int col = 0; col < table.getColumnCount(); col++) {
+                    pdfTable.addCell(table.getValueAt(row, col).toString());
+                }
+            }
+
+            document.add(pdfTable);
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

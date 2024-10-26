@@ -74,8 +74,10 @@
                                   <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="cboTotalRegPag" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                                       <Component id="btnVentas1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnVentas2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -130,6 +132,7 @@
                           <Component id="cboNumPag" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cboTotalRegPag" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnVentas1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnVentas2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
@@ -257,10 +260,18 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnVentas1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Generar PDF"/>
+                <Property name="text" type="java.lang.String" value="Generar PDF General"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentas1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnVentas2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Generar PDF Busqueda Seleccionada"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVentas2ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -379,7 +390,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="14" max="32767" attributes="0"/>
+                      <EmptySpace pref="69" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
